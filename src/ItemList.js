@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import Product from './Item';
+import Item from './Item';
 
 
 /*var sellers = [{
@@ -44,7 +44,7 @@ class ItemList extends Component{
     this.getAllProducts();
     
     const productComponents = this.state.products.map((product, ind) => (
-      <Product 
+      <Item 
         key={'AL' + ind}
         id={product.id}
         name={product.name}

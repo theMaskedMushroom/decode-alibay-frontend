@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Header from './components/Header';
 import './App.css';
+import ItemList from './ItemList';
 
 class App extends Component 
 {
@@ -25,12 +26,12 @@ class App extends Component
 
   renderHomePage()
   {
-    return <div>Home page</div>
+    return <div><ItemList /></div>
   }
 
   renderSignup()
   {
-    return <div>Signup</div>
+    return <div>Signup</div>  
   }
 
   renderLogin()
