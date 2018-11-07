@@ -22,6 +22,21 @@ class App extends Component
   componentDidMount()
   {
     // TODO: automatic login when proper cookie is set (fetch to backend)
+
+    // Fetch all items then dispatch them so they become available to the whole application
+    fetch('/products', {
+      method: 'GET'
+    }).then(x => x.text())
+    .then(res => {
+      var parsed = JSON.parse(res);
+      if(parsed.status){
+        this.props.dispatch({type:'setAllProducts', payload: parsed});
+      }
+      else
+      {
+        console.log("fetch /products status is false. Something went wrong on the db side...")
+      }
+    })
   }
 
   renderHomePage()
