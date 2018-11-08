@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import Header from './components/Header';
 import './App.css';
 import ItemList from './ItemList';
+import Signup from './Signup';
+import Login from './Login';
 
 class App extends Component 
 {
@@ -31,12 +33,12 @@ class App extends Component
 
   renderSignup()
   {
-    return <div>Signup</div>  
+    return <div><Signup /></div>  
   }
 
   renderLogin()
   {
-    return <div>Login</div>
+    return <div><Login /></div>
   }
 
   renderItemDetail(query)
