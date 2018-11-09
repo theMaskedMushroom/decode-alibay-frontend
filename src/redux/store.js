@@ -4,7 +4,8 @@ import {createStore} from 'redux';
  * Initial state    *
  ********************/
 let initialState = {
-    products:[]
+    products:[],
+    users: []
 };
 
 /***********
@@ -23,7 +24,9 @@ function reducer(state, action)
     switch(action.type)
     {
         case 'setAllProducts':
-            return {...state, products: action.payload.products}
+            return {...state, products: action.payload.products};
+        case 'setAllUsers':
+            return {...state, users: action.payload.users};
 
         default:
             return state;

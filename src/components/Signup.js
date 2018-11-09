@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 
 class Signup extends Component {
   constructor(props) {
@@ -105,10 +105,10 @@ class Signup extends Component {
   render() {
     return(<div>
         <br />
-        <div>
+        
           {this.comparePassword()}
-        </div>
-        <br />
+        
+        <br /><br />
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
