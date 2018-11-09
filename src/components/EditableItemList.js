@@ -35,11 +35,11 @@ class EditableItemList extends Component
 
     render()
     {
-        let bogusVendor_ID = '73a-c73-455-840';// or '5be47694df00c2187c798069'
+        let bogusVendor_ID = '73ac73455840';// or '5be47694df00c2187c798069'
 
         return <div>
         
-            Item manager (editable list)
+            <h2>Manage your items for sale</h2>
 
             {this.props.products.filter(function(product){ return product.vendor_id === bogusVendor_ID}).map(function(product, i, arr){
                 return <EditableItem
@@ -50,9 +50,9 @@ class EditableItemList extends Component
 
             <Modal 
                     visible={this.state.modalOpened}
-                    width="400"
-                    height="300"
-                    effect="fadeInUp"
+                    //width="400"
+                    //height="300"
+                    effect="fadeInDown"
                     //onClickAway={() => this.closeModal()}
                 >
                     <ItemEditor 
