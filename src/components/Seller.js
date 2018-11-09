@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Seller extends Component{
+  /*
   constructor(props){
     super(props);
 
-    //this.formatSeller = this.formatSeller.bind(this);
   }
-
-  //formatSeller(){
-
-  //}
+  */
+  
 
   render(){
     var vendorid = this.props.vendor_id;
