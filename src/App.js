@@ -7,7 +7,7 @@ import ItemList from './components/ItemList';
 import EditableItemList from './components/EditableItemList';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import Item from './components/Item';
+import Seller from './components/Seller';
 
 class App extends Component 
 {
@@ -42,6 +42,22 @@ class App extends Component
         console.log("fetch /products status is false. Something went wrong on the db side...")
       }
     })
+
+    // Fetch all users then dispatch them so they become available to the whole application
+    fetch('/users', {
+      method: 'GET'
+    }).then(x => x.text())
+    .then(res => {
+      var parsed = JSON.parse(res);
+      if(parsed.status){
+        this.props.dispatch({type:'setAllUsers', payload: parsed});
+      }
+      else
+      {
+        console.log("fetch /users status is false. Something went wrong on the db side...")
+      }
+    })
+
   }
 
   renderHomePage()
@@ -68,11 +84,15 @@ class App extends Component
 
   renderSellerDetail(routerData)
   {
-    var vendor_id = routerData.match.params.vendorId;
+    var vendorid = routerData.match.params.sellerId;
     var result = this.props.products.filter(obj => {
-      return obj.vendor_id === vendor_id;
+      return obj.vendor_id === vendorid;
     })
-    return <Seller seller={result} />;
+    //debugger
+    return <Seller 
+      vendor_id={vendorid}
+      filterProducts={result}  
+    />;
   }
 
   renderItemManager()
@@ -93,7 +113,7 @@ class App extends Component
           <Route exact={true} path='/login' render={this.renderLogin} />
           <Route exact={true} path='/item/:itemId' render={this.renderItemDetail} />
           <Route exact={true} path='/itemmanager' render={this.renderItemManager} />
-          <Route exact={true} path='/vendor/:vendorId' render={this.renderSellerDetail} />
+          <Route exact={true} path='/seller/:sellerId' render={this.renderSellerDetail} />
 
         </div>
       </Router>
@@ -103,7 +123,10 @@ class App extends Component
 
 function mapStateToProps(state)
 {
-  return {products: state.products}
+  return {
+    products: state.products,
+    myusers: state.users
+  }
 }
 
 export default connect(mapStateToProps)(App);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 
 class Login extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class Login extends Component {
     }).then(x => {
       return x.text();
     }).then(res=> {
-      var parsed = JSON.parse(res);
+      //var parsed = JSON.parse(res);
       
     })
     //debugger;

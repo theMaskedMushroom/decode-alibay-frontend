@@ -5,9 +5,8 @@ import {connect} from 'react-redux';
 class ItemList extends Component{
   /*constructor(props){
     super(props);
-    this.state = {
-      
-    }
+    
+
   }*/
 
   render(){
@@ -20,10 +19,10 @@ class ItemList extends Component{
         price={product.price}
         description={product.description}        
         imageUrl={product.imageUrl}
-        vendor={product.name}
+        vendor_id={product.vendor_id}
       />
     ));
-    
+  
     return (
     <div>
       {productComponents}
@@ -33,7 +32,10 @@ class ItemList extends Component{
 
 function mapStateToProps(state)
 {
-  return {products: state.products}
+  return { 
+    products: state.products,
+    myusers: state.users
+  }
 }
 
 export default connect(mapStateToProps)(ItemList);
