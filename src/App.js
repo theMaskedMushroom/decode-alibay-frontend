@@ -4,8 +4,7 @@ import {connect} from 'react-redux';
 import Header from './components/Header';
 import './App.css';
 import ItemList from './ItemList';
-import Signup from './Signup';
-import Login from './Login';
+import EditableItemList from './components/EditableItemList';
 
 class App extends Component 
 {
@@ -24,6 +23,21 @@ class App extends Component
   componentDidMount()
   {
     // TODO: automatic login when proper cookie is set (fetch to backend)
+
+    // Fetch all items then dispatch them so they become available to the whole application
+    fetch('/products', {
+      method: 'GET'
+    }).then(x => x.text())
+    .then(res => {
+      var parsed = JSON.parse(res);
+      if(parsed.status){
+        this.props.dispatch({type:'setAllProducts', payload: parsed});
+      }
+      else
+      {
+        console.log("fetch /products status is false. Something went wrong on the db side...")
+      }
+    })
   }
 
   renderHomePage()
@@ -33,12 +47,12 @@ class App extends Component
 
   renderSignup()
   {
-    return <div><Signup /></div>  
+    return <div>Signup</div>  
   }
 
   renderLogin()
   {
-    return <div><Login /></div>
+    return <div>Login</div>
   }
 
   renderItemDetail(query)
@@ -50,7 +64,7 @@ class App extends Component
 
   renderItemManager()
   {
-    return <div>Item manager</div>
+    return <div><EditableItemList/></div>
   }
 
   render() 
