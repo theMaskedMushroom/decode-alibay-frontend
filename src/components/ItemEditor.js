@@ -17,7 +17,11 @@ class ItemEditor extends Component
         this.stateValuesAssigned = false;
 
         // Bindings
+        this.onSubmit = this.onSubmit.bind(this);
+        this.cancel = this.cancel.bind(this);
         this.onNameChange = this.onNameChange.bind(this);
+        this.onDescriptionChange = this.onDescriptionChange.bind(this);
+        this.onPriceChange = this.onPriceChange.bind(this);
     }
 
     componentDidUpdate(prevProps)
@@ -40,15 +44,65 @@ class ItemEditor extends Component
         }
     }
 
+    cancel(evt)
+    {
+        evt.preventDefault();
+
+        // TODO: clean up the fields before closing
+
+
+        this.props.closeModal();
+    }
+
+    onSubmit(evt)
+    {
+        evt.preventDefault();
+
+        // Sanitize the data and give feedback where necessary (No empty fields, and no price=0)
+        // TODO this.validateData()=> bool early return
+
+        // Do the fetch
+
+        // close the modal
+        if (window.confirm("Update this item?"))
+        {
+            this.props.closeModal();
+        }
+    }
+
     onNameChange(evt)
     {
         this.setState({newName: evt.target.value});
     }
 
+    onDescriptionChange(evt)
+    {
+        this.setState({newDescription: evt.target.value})
+    }
+
+    onPriceChange(evt)
+    {
+        this.setState({newPrice: evt.target.value})
+    }
+
     render()
     {
         return  <form onSubmit={this.onSubmit}>
-                    <label>Product Name:</label><input type='text' onChange={this.onNameChange} value={this.state.newName} />
+                    <div>
+                        <label>Product Name:</label><input type='text' onChange={this.onNameChange} value={this.state.newName} />
+                    </div>
+
+                    <div>
+                        <label>Description:</label><textarea onChange={this.onDescriptionChange} value={this.state.newDescription} />
+                    </div>
+
+                    <div>
+                        <label>Price:</label><input type='number' onChange={this.onPriceChange} value={this.state.newPrice} />
+                    </div>
+
+                    <button onClick={this.cancel}>Cancel</button>
+
+                    <input type='submit' value='Update' />
                 </form>
     }
 }

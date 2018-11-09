@@ -18,6 +18,7 @@ class EditableItemList extends Component
 
         // bindings
         this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     openModal(product)
@@ -54,8 +55,9 @@ class EditableItemList extends Component
                     effect="fadeInUp"
                     //onClickAway={() => this.closeModal()}
                 >
-                    <ItemEditor product={this.state.productInEditor } />
-                    <button onClick={() => this.closeModal()}>Close</button>
+                    <ItemEditor 
+                                product={this.state.productInEditor }
+                                closeModal={this.closeModal} />
                 </Modal>
 
         </div>

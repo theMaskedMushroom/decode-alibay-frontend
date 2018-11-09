@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Header from './components/Header';
 import './App.css';
-import ItemList from './ItemList';
+import ItemList from './components/ItemList';
 import EditableItemList from './components/EditableItemList';
 
 class App extends Component 
