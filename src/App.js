@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Header from './components/Header';
 import './App.css';
 import ItemList from './ItemList';
+import EditableItemList from './components/EditableItemList';
 
 class App extends Component 
 {
@@ -63,7 +64,7 @@ class App extends Component
 
   renderItemManager()
   {
-    return <div>Item manager</div>
+    return <div><EditableItemList/></div>
   }
 
   render() 
