@@ -6,6 +6,7 @@
   "dependencies": {
     "md5": "^2.2.1",
     "react": "^16.6.0",
+    "react-awesome-modal": "^2.0.5",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",

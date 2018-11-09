@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Header from './components/Header';
 import './App.css';
-import ItemList from './ItemList';
+import ItemList from './components/ItemList';
 import EditableItemList from './components/EditableItemList';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Item from './components/Item';
 
 class App extends Component 
 {
@@ -18,6 +21,7 @@ class App extends Component
     this.renderLogin = this.renderLogin.bind(this);
     this.renderItemDetail = this.renderItemDetail.bind(this);
     this.renderItemManager = this.renderItemManager.bind(this);
+    this.renderSellerDetail = this.renderSellerDetail.bind(this);
   }
 
   componentDidMount()
@@ -47,12 +51,12 @@ class App extends Component
 
   renderSignup()
   {
-    return <div>Signup</div>  
+    return <div><Signup /></div>  
   }
 
   renderLogin()
   {
-    return <div>Login</div>
+    return <div><Login /></div>
   }
 
   renderItemDetail(query)
@@ -60,6 +64,15 @@ class App extends Component
     let itemId = query.match.params.itemId;
 
     return <div>Item detail ({itemId})</div>
+  }
+
+  renderSellerDetail(routerData)
+  {
+    var vendor_id = routerData.match.params.vendorId;
+    var result = this.props.products.filter(obj => {
+      return obj.vendor_id === vendor_id;
+    })
+    return <Seller seller={result} />;
   }
 
   renderItemManager()
@@ -80,6 +93,7 @@ class App extends Component
           <Route exact={true} path='/login' render={this.renderLogin} />
           <Route exact={true} path='/item/:itemId' render={this.renderItemDetail} />
           <Route exact={true} path='/itemmanager' render={this.renderItemManager} />
+          <Route exact={true} path='/vendor/:vendorId' render={this.renderSellerDetail} />
 
         </div>
       </Router>
@@ -89,9 +103,7 @@ class App extends Component
 
 function mapStateToProps(state)
 {
-  return {
-
-  };
+  return {products: state.products}
 }
 
 export default connect(mapStateToProps)(App);

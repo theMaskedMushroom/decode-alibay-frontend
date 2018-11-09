@@ -105,10 +105,10 @@ class Signup extends Component {
   render() {
     return(<div>
         <br />
-        <div>
+        
           {this.comparePassword()}
-        </div>
-        <br />
+        
+        <br /><br />
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
