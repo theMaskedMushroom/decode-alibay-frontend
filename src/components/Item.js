@@ -11,7 +11,6 @@ class Item extends Component{
 
   render(){
     var users = this.props.myusers;
-
     var user = users.filter(obj => {
       return obj.id === this.props.vendor_id;
     });
@@ -26,7 +25,9 @@ class Item extends Component{
         <img height="100px" src={this.props.imageUrl} alt="product_picture" />
       </div>
       
-      <div>{this.props.name}</div>
+      <div>
+        <Link to={"/item/" + this.props.id}>{this.props.name}</Link>
+      </div>
       <div>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'USD' })
         .format(this.props.price)}
       </div>

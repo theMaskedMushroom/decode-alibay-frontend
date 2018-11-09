@@ -8,6 +8,7 @@ import EditableItemList from './components/EditableItemList';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Seller from './components/Seller';
+import ItemDetail from './ItemDetail';
 
 class App extends Component 
 {
@@ -75,11 +76,10 @@ class App extends Component
     return <div><Login /></div>
   }
 
-  renderItemDetail(query)
+  renderItemDetail(routerData)
   {
-    let itemId = query.match.params.itemId;
-
-    return <div>Item detail ({itemId})</div>
+    var itemid = routerData.match.params.itemId;
+    return <div><ItemDetail item_id={itemid} /></div>
   }
 
   renderSellerDetail(routerData)
