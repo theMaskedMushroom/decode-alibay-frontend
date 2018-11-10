@@ -8,7 +8,7 @@ import EditableItemList from './components/EditableItemList';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Seller from './components/Seller';
-import ItemDetail from './ItemDetail';
+import ItemDetail from './components/ItemDetail';
 
 class App extends Component 
 {
@@ -59,6 +59,17 @@ class App extends Component
       }
     })
 
+    // Fetch all users then dispatch them so they become available to the whole application
+    fetch('/getreviews', {
+      method: 'GET'
+    }).then(x => {
+      return x.text();
+    }).then(res => {
+      var parsed = JSON.parse(res);
+      if(parsed.status){
+        this.props.dispatch({type: 'setAllReviews', payload: parsed});
+      }
+    })
   }
 
   renderHomePage()
@@ -125,7 +136,8 @@ function mapStateToProps(state)
 {
   return {
     products: state.products,
-    myusers: state.users
+    myusers: state.users,
+    myreviews: state.reviews
   }
 }
 

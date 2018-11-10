@@ -40,10 +40,13 @@ class Item extends Component{
   }
 }
 
-function mapStateToProps(state){
-  return { 
+function mapStateToProps(state)
+{
+  return {
     products: state.products,
-    myusers: state.users };
+    myusers: state.users,
+    myreviews: state.reviews
+  }
 }
 
 export default connect(mapStateToProps)(Item);
