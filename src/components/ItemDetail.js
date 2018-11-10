@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import ToggleableReviewForm from './ToggleableReviewForm';
 
 class ItemDetail extends Component{
-
 
   render(){
     var itemid = this.props.item_id;
@@ -34,7 +34,9 @@ class ItemDetail extends Component{
           <img height="100px" src={obj.imageUrl} alt="product_picture" />
           </div>
           <div key={'item2'+ind}>{obj.pname}</div>
-          <div key={'item3'+ind}>{obj.price}</div>
+          <div key={'item3'+ind}>
+            {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'USD' }).format(obj.price)}
+          </div>
           <div key={'item4'+ind}>{obj.description}</div>
           <div key={'item5'+ind}>Sold by: 
             <Link to={'/seller/' + vendor_id[0]}>{vendor[0]}</Link>
@@ -43,16 +45,27 @@ class ItemDetail extends Component{
       );
     });
     //<div key={'item5'+ind}>{obj.vendor_id}</div>
-    return(<div className="card center">
-      {renderProduct}
-    </div>);
+    return(
+      <div>
+        <div className="card center">
+          {renderProduct}
+          <br /><br />
+        </div>
+        <div>
+          <ToggleableReviewForm product_id={this.props.item_id} />
+        </div>
+      </div>
+    );
   }
 }
 
-function mapStateToProps(state){
-  return { 
+function mapStateToProps(state)
+{
+  return {
     products: state.products,
-    myusers: state.users };
+    myusers: state.users,
+    myreviews: state.reviews
+  }
 }
 
 export default connect(mapStateToProps)(ItemDetail);

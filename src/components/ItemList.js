@@ -32,9 +32,10 @@ class ItemList extends Component{
 
 function mapStateToProps(state)
 {
-  return { 
+  return {
     products: state.products,
-    myusers: state.users
+    myusers: state.users,
+    myreviews: state.reviews
   }
 }
 
