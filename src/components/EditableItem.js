@@ -8,12 +8,19 @@ class EditableItem extends Component
         super(props);
 
         this.setEditMode = this.setEditMode.bind(this);
+        this.setDeleteMode = this.setDeleteMode.bind(this);
     }
 
     setEditMode(evt)
     {
-        // transition to modal view
-        this.props.openModal(this.props.product);
+        // transition to modal view for updating
+        this.props.openModal('Update item', 'update', this.props.product);
+    }
+
+    setDeleteMode(evt)
+    {
+        // Transition to modal view for deleting
+        this.props.openModal('Delete item', 'delete', this.props.product);
     }
 
     render()
@@ -28,7 +35,12 @@ class EditableItem extends Component
                     .format(this.props.product.price)}
                 </div>
                 <div>{this.props.product.description}</div>
-                <button onClick={this.setEditMode}>Edit</button>
+
+                <div>
+                    <button onClick={this.setEditMode} className='btn btn-primary'>Update</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button onClick={this.setDeleteMode} className='btn btn-danger'>Delete</button>
+                </div>
             </div>
         );
     }

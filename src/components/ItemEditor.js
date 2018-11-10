@@ -25,6 +25,7 @@ class ItemEditor extends Component
 
         // Bindings
         this.onSubmit = this.onSubmit.bind(this);
+        this.processServerResponse = this.processServerResponse.bind(this);
         this.cancel = this.cancel.bind(this);
         this.onNameChange = this.onNameChange.bind(this);
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
@@ -36,45 +37,41 @@ class ItemEditor extends Component
     {
         if(!prevProps.product && this.props.product)
         {
-            this.setState({
-                newName: this.props.product.pname,
-                newPrice: parseInt(this.props.product.price),
-                newDescription: this.props.product.description,
-                newImageUrl: this.props.product.imageUrl,
-                formFeedback: ''
-            });
-
-            // and reset the file input
-            this.fileInputRef.current.value = null;
-
-            // Reset form validation flags
-            this.nameValid = this.descriptionValid = this.priceValid = true;
+            this.reset();
         }
         else if (this.props.product._id !== prevProps.product._id)
         {
-            this.setState({
-                newName: this.props.product.pname,
-                newPrice: parseInt(this.props.product.price),
-                newDescription: this.props.product.description,
-                newImageUrl: this.props.product.imageUrl,
-                formFeedback: ''
-            });
-
-            // and reset the file input
-            this.fileInputRef.current.value = null;
-
-            // Reset form validation flags
-            this.nameValid = this.descriptionValid = this.priceValid = true;
+            this.reset();
         }
+    }
+
+    reset()
+    {
+        // Product values go back to the passed in product
+        this.setState({
+            newName: this.props.product.pname,
+            newPrice: parseInt(this.props.product.price),
+            newDescription: this.props.product.description,
+            newImageUrl: this.props.product.imageUrl,
+            formFeedback: ''
+        });
+
+        // and reset the file input
+        this.fileInputRef.current.value = null;
+
+        // Reset form validation flags if update or delete,
+        // for add, we know the objecct is blank, so nothing is valid
+        this.nameValid = this.descriptionValid = this.priceValid = this.props.action === 'update' || this.props.action === 'delete' ? true : false;
     }
 
     cancel(evt)
     {
         evt.preventDefault();
 
-        // TODO: clean up the fields before closing
+        // Make sure the state is reset for the case where the user just wants to start updating over
+        this.reset();
 
-
+        // Bye bye!
         this.props.closeModal();
     }
 
@@ -83,23 +80,90 @@ class ItemEditor extends Component
         evt.preventDefault();
 
         // Is the form data valid (if not, feedback and return)
-        if(!this.nameValid || !this.descriptionValid || !this.priceValid)
+        if(!this.nameValid || !this.descriptionValid || !this.priceValid || this.state.newImageUrl === "pictures/no-image-available.png")
         {
-            this.setState({formFeedback:'The form contains empty fields or invlid data. Please check.'});
+            this.setState({formFeedback:'The form contains empty fields, invlid data or no image. Please check.'});
             return;
         }
 
-        // TODO: Fetch the update endpoint and on processing server response, if success, closeModal
-        if (window.confirm("Update this item?"))
+        // Depending on the type of action, fetch the proper endpoint
+        switch(this.props.action)
         {
-            this.props.closeModal();
+            case 'add':
+                this.fetchAdd();
+                break;
+
+            case 'update':
+                this.fetchUpdate();
+                break;
+
+            case 'delete':
+                this.fetchDelete();
+                break;
+
+            default:
+                console.log("unknown edit action... must be 'add', 'update' or 'delete'");
+                break;
         }
+       
+    }
+
+    fetchAdd()
+    {
+        fetch('/bogus', {
+            method: 'POST',
+            body: JSON.stringify({nothing:null})
+        })
+        .then(function(response) { return response.text()})
+        .then(this.processServerResponse)
+    }
+
+    fetchUpdate()
+    {
+        fetch('/bogus', {
+            method: 'POST',
+            body: JSON.stringify({nothing:null})
+        })
+        .then(function(response) { return response.text()})
+        .then(this.processServerResponse)
+    }
+
+    fetchDelete()
+    {
+        fetch('/bogus', {
+            method: 'POST',
+            body: JSON.stringify({nothing:null})
+        })
+        .then(function(response) { return response.text()})
+        .then(this.processServerResponse)
+    }
+
+    processServerResponse(response)
+    {
+        // Try to parse the response (errors usually mean the server spat back some HTML stating errors)
+        let parsed;
+
+        try
+        {
+            parsed = JSON.parse(response);
+        }
+        catch (err)
+        {
+            this.setState({formFeedback: 'Error processing server response. Please cancel and try again later.'});
+            return;
+        }
+
+        // Dispatch updated items array
+        
+
+        // And close the modal
+        this.props.closeModal();
     }
 
     onNameChange(evt)
     {
         // Is the name valid or not? Mark it and let the state change anyway
-        evt.target.value === '' ? this.nameValid = false : this.nameValid = true;
+        this.nameValid = evt.target.value === '' ? false : true;
 
         this.setState({newName: evt.target.value, formFeedback:''});
     }
@@ -107,7 +171,7 @@ class ItemEditor extends Component
     onDescriptionChange(evt)
     {
         // Is the description valid or not? Mark it and let the state change anyway
-        evt.target.value === '' ? this.descriptionValid = false : this.descriptionValid = true;
+        this.descriptionValid = evt.target.value === '' ? false : true;
 
         this.setState({newDescription: evt.target.value, formFeedback:''})
     }
@@ -148,7 +212,7 @@ class ItemEditor extends Component
     {
         return  <form onSubmit={this.onSubmit} className='itemEditForm'>
 
-                    <h3>Form title</h3>
+                    <h3>{this.props.title}</h3>
 
                     <div className='form-group'>
                         <img height='300' src={this.state.newImageUrl} alt='product'/>
@@ -179,7 +243,9 @@ class ItemEditor extends Component
                         <div className='text-danger'>&nbsp;{this.state.formFeedback}</div>
                         <button onClick={this.cancel} className='btn btn-default'>Cancel</button>
                         &nbsp;&nbsp;&nbsp;
-                        <input type='submit' value='OK' className='btn btn-primary'/>
+                        <input type='submit' 
+                                value={this.props.action === 'delete'?'Delete':'OK'} 
+                                className={this.props.action === 'delete'?'btn btn-danger':'btn btn-primary'}/>
                     </div>
                 </form>
     }
