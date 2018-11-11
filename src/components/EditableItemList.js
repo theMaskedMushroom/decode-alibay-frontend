@@ -28,7 +28,7 @@ class EditableItemList extends Component
     {
         // Create a blank product object
         let blankProduct = {
-            _id:'',
+            product_id:'',
             imageUrl:'pictures/no-image-available.png',
             pname:'',
             description:'',

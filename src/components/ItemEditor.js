@@ -39,7 +39,7 @@ class ItemEditor extends Component
         {
             this.reset();
         }
-        else if (this.props.product._id !== prevProps.product._id)
+        else if (this.props.product.product_id !== prevProps.product.product_id)
         {
             this.reset();
         }
@@ -110,9 +110,19 @@ class ItemEditor extends Component
 
     fetchAdd()
     {
-        fetch('/bogus', {
+         // Let's create and populate the object we'll post to the backend (a FormData)
+        // use append() to let the object do it's own formatting
+        let formData = new FormData();
+
+        formData.append('vendor_id', '73ac73455840');
+        formData.append('pname', this.state.newName);
+        formData.append('description', this.state.newDescription);
+        formData.append('price', this.state.newPrice);
+        formData.append('image', this.fileInputRef.current.files[0]);
+
+        fetch('/addproduct', {
             method: 'POST',
-            body: JSON.stringify({nothing:null})
+            body: formData
         })
         .then(function(response) { return response.text()})
         .then(this.processServerResponse)
@@ -120,9 +130,26 @@ class ItemEditor extends Component
 
     fetchUpdate()
     {
-        fetch('/bogus', {
+        // Let's create and populate the object we'll post to the backend (a FormData)
+        // use append() to let the object do it's own formatting
+        let formData = new FormData();
+
+        formData.append('product_id', this.props.product.product_id);
+        formData.append('vendor_id', '73ac73455840');
+        formData.append('pname', this.state.newName);
+        formData.append('description', this.state.newDescription);
+        formData.append('price', this.state.newPrice);
+
+        // Do we have a picture update?
+        if (this.fileInputRef.current.files.length > 0)
+        {
+            formData.append('image', this.fileInputRef.current.files[0]);
+        }
+
+        // Ok, do the fetch
+        fetch('/updateproduct', {
             method: 'POST',
-            body: JSON.stringify({nothing:null})
+            body: formData
         })
         .then(function(response) { return response.text()})
         .then(this.processServerResponse)
@@ -130,9 +157,9 @@ class ItemEditor extends Component
 
     fetchDelete()
     {
-        fetch('/bogus', {
+        fetch('/deleteproduct', {
             method: 'POST',
-            body: JSON.stringify({nothing:null})
+            body: JSON.stringify({product_id:this.props.product.product_id})
         })
         .then(function(response) { return response.text()})
         .then(this.processServerResponse)
@@ -154,6 +181,7 @@ class ItemEditor extends Component
         }
 
         // Dispatch updated items array
+        this.props.dispatch({type:'setAllProducts', payload: parsed})
         
 
         // And close the modal
