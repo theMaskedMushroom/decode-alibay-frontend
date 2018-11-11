@@ -140,10 +140,11 @@ class ItemEditor extends Component
         formData.append('description', this.state.newDescription);
         formData.append('price', this.state.newPrice);
 
-        // Do we have a picture update?
+        // Do we have a picture update? if so, also send the old picture path to be deleted
         if (this.fileInputRef.current.files.length > 0)
         {
             formData.append('image', this.fileInputRef.current.files[0]);
+            formData.append('oldImage', this.props.product.imageUrl);
         }
 
         // Ok, do the fetch
@@ -159,7 +160,10 @@ class ItemEditor extends Component
     {
         fetch('/deleteproduct', {
             method: 'POST',
-            body: JSON.stringify({product_id:this.props.product.product_id})
+            body: JSON.stringify({
+                product_id:this.props.product.product_id,
+                oldImage: this.props.product.imageUrl
+            })
         })
         .then(function(response) { return response.text()})
         .then(this.processServerResponse)
