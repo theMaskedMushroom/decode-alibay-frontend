@@ -269,7 +269,7 @@ class ItemEditor extends Component
 
                     <div className='width100percent alignRight'>
                         <div className='text-danger'>&nbsp;{this.state.formFeedback}</div>
-                        <button onClick={this.cancel} className='btn btn-default'>Cancel</button>
+                        <button type='button' onClick={this.cancel} className='btn btn-default'>Cancel</button>
                         &nbsp;&nbsp;&nbsp;
                         <input type='submit' 
                                 value={this.props.action === 'delete'?'Delete':'OK'} 
