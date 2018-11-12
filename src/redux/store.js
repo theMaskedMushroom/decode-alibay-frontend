@@ -26,8 +26,10 @@ function reducer(state, action)
     {
         case 'setAllProducts':
             return {...state, products: action.payload.products};
+
         case 'setAllUsers':
             return {...state, users: action.payload.users};
+            
         case 'setAllReviews':
             return {...state, reviews: action.payload.reviews};
 

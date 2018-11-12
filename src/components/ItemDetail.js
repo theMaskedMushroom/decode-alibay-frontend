@@ -2,36 +2,35 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ToggleableReviewForm from './ToggleableReviewForm';
+import shortId from 'shortid';
 
 class ItemDetail extends Component{
 
   render(){
     var itemid = this.props.item_id;
     var products = this.props.products;
-    var product = products.filter(obj => {
+    var product = products.filter(function(obj){
       return obj.product_id === itemid;
     })
-    /////////////////////////////////////////
-    var vendor_id = product.map(obj => {
+    
+    var vendor_id = product.map(function(obj){
       return obj.vendor_id;
     });
-    //debugger
+    
     var users = this.props.myusers;
-    var user = users.filter(obj => {
+    var user = users.filter(function(obj){
       return obj.id === vendor_id[0];
     })
-    //debugger
-    var vendor = user.map(obj => {
+    
+    var vendor = user.map(function(obj){
       return obj.name;
     });
-    //debugger
-    //////////////////////////////////////////
-    //debugger
-    const renderProduct = product.map((obj, ind) => {
+    
+    const renderProduct = product.map(function(obj, ind){
       return (
-        <div key={'itemp'}>
+        <div key={shortId.generate()}>
           <div key={'item1'+ind}>
-          <img height="100px" src={obj.imageUrl} alt="product_picture" />
+          <img height="100px" src={'../' + obj.imageUrl} alt="product_picture" />
           </div>
           <div key={'item2'+ind}>{obj.pname}</div>
           <div key={'item3'+ind}>
@@ -44,7 +43,7 @@ class ItemDetail extends Component{
         </div>
       );
     });
-    //<div key={'item5'+ind}>{obj.vendor_id}</div>
+
     return(
       <div>
         <div className="card center">
@@ -69,5 +68,3 @@ function mapStateToProps(state)
 }
 
 export default connect(mapStateToProps)(ItemDetail);
-
-//export default ItemDetail;

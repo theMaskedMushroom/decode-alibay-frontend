@@ -2,23 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Seller extends Component{
-  /*
-  constructor(props){
-    super(props);
-
-  }
-  */
-  
 
   render(){
     var vendorid = this.props.vendor_id;
     var products = this.props.filterProducts;
     var sellers = this.props.myusers;
-    var seller = sellers.filter(obj => {
+    var seller = sellers.filter(function(obj){
       return obj.id === vendorid;
     });
    //debugger
-    const renderSeller = seller.map(obj => {
+    const renderSeller = seller.map(function(obj){
       return (
         <div key={'aaa'} align="center" >
           <br />
@@ -35,7 +28,7 @@ class Seller extends Component{
       return (
         <div key={'aaaa1'+ind} className="card center">
           <div key={'aaaa'+ind}>
-            <img height="100px" src={obj.imageUrl} alt="product_picture" />
+            <img height="100px" src={'../' + obj.imageUrl} alt="product_picture" />
           </div>
           <div key={'bbbb'+ind}>{obj.pname}</div>
           <div key={'cccc'+ind}>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'USD' })
@@ -64,5 +57,3 @@ function mapStateToProps(state)
 }
 
 export default connect(mapStateToProps)(Seller);
-
-//export default Seller;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'; 
-//import { connect } from 'react-redux';
 
 class Signup extends Component {
   constructor(props) {
@@ -46,7 +45,7 @@ class Signup extends Component {
       var parsed = JSON.parse(res);
       console.log(parsed);
     })
-    //debugger;
+
     this.setState({username: ""});
     this.setState({password: ""});
     this.setState({confirmPassword: ""});
@@ -97,9 +96,7 @@ class Signup extends Component {
     };
     if(this.state.password !== this.state.confirmPassword){
       return <span style={spanStyle}>passwords do not match</span>
-    } //else {
-      //return <span color="green">passwords match</span>
-    //}
+    } 
   }
 
   render() {

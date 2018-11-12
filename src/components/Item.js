@@ -3,26 +3,20 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Item extends Component{
-  /*constructor(props){
-    super(props);
-
-    this.getUsers = this.getUsers.bind(this);
-  }*/
 
   render(){
     var users = this.props.myusers;
-    var user = users.filter(obj => {
+    var user = users.filter(function(obj){
       return obj.id === this.props.vendor_id;
-    });
+    }.bind(this));
     
-    var vendor = user.map(obj => {
+    var vendor = user.map(function(obj){
       return obj.name;
     });
-    //debugger
-    //<div>{this.props.id}</div>
+
     return(<div className="card center">
       <div>
-        <img height="100px" src={this.props.imageUrl} alt="product_picture" />
+        <img height="100px" src={'../' + this.props.imageUrl} alt="product_picture" />
       </div>
       
       <div>

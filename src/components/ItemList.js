@@ -11,8 +11,8 @@ class ItemList extends Component{
 
   render(){
     
-    const productComponents = this.props.products.map((product, ind) => (
-      <Item 
+    const productComponents = this.props.products.map(function(product, ind){
+      return (<Item 
         key={'AL' + ind}
         id={product.product_id}
         name={product.pname}
@@ -20,8 +20,8 @@ class ItemList extends Component{
         description={product.description}        
         imageUrl={product.imageUrl}
         vendor_id={product.vendor_id}
-      />
-    ));
+      />)
+    });
   
     return (
     <div>

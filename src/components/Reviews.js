@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-//import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
 class Reviews extends Component{
-  /*constructor(props){
-    super(props);
-    this.state = {
-      reviews: [],
-    };
-  }*/
 
   render(){
     var item_id = this.props.productid;
